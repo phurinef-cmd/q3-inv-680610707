@@ -1,7 +1,4 @@
-import { useItemStore } from "@/store/dataStore";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { useItemStore } from "../store/dataStore";
 import {
   Table,
   TableBody,
@@ -9,70 +6,67 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Trash } from "lucide-react";
+} from "./ui/table";
+import { Button } from "./ui/button";
+import { Trash2 } from "lucide-react";
 
 export function ItemList() {
-  const { inventory } = useItemStore();
+  const inventory = useItemStore((state) => state.inventory);
+  const deleteInventoryItem = useItemStore((state) => state.deleteInventoryItem);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Product List</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Table>
-          <TableHeader>
+    <div className="bg-white border rounded-lg p-4 shadow-sm">
+      <h3 className="text-sm font-semibold text-slate-700 mb-3">Product List</h3>
+      <Table>
+        <TableHeader>
+          <TableRow className="text-xs text-slate-500">
+            <TableHead>Category</TableHead>
+            <TableHead>Product Name</TableHead>
+            <TableHead className="text-right">Qty</TableHead>
+            <TableHead className="text-right">Unit Price</TableHead>
+            <TableHead className="text-right">Total Value</TableHead>
+            <TableHead>Date Added</TableHead>
+            <TableHead className="text-center">Action</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {inventory.length === 0 ? (
             <TableRow>
-              <TableHead>Category</TableHead>
-              <TableHead>Product Name</TableHead>
-              <TableHead className="text-right">Qty</TableHead>
-              <TableHead className="text-right">Unit Price</TableHead>
-              <TableHead className="text-right">Total Value</TableHead>
-              <TableHead>Date Added</TableHead>
-              <TableHead className="text-right"></TableHead>
+              <TableCell colSpan={7} className="text-center text-xs text-slate-400 py-6">
+                No products in stock.
+              </TableCell>
             </TableRow>
-          </TableHeader>
-          <TableBody>
-            {inventory.length === 0 ? (
-              <TableRow>
-                <TableCell
-                  colSpan={7}
-                  className="text-center text-muted-foreground py-6"
-                >
-                  No products in stock yet.
-                </TableCell>
-              </TableRow>
-            ) : (
-              // replace the following hardcoded row with the dynamic mapping of data items
-              <TableRow>
-                <TableCell>
-                  <Badge variant="outline">Electronics</Badge>
-                </TableCell>
-                <TableCell className="font-medium">Apple Airpod 5</TableCell>
-                <TableCell className="text-right">10</TableCell>
-                <TableCell className="text-right">฿4000.00</TableCell>
-                <TableCell className="text-right font-semibold">
-                  ฿{(10 * 4000).toFixed(2)}
-                </TableCell>
-                <TableCell className="text-muted-foreground">
-                  2026-10-05
-                </TableCell>
-                <TableCell className="text-right">
-                  <Button
-                    className="text-white bg-red-500 hover:bg-red-600 text-white"
-                    variant="ghost"
-                    size="sm"
-                  >
-                    <Trash className="h-4 w-4" />
-                    Delete
-                  </Button>
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </CardContent>
-    </Card>
+          ) : (
+            inventory.map((item) => {
+              const totalValue = item.quantity * item.price;
+              return (
+                <TableRow key={item.id} className="text-xs">
+                  <TableCell className="text-slate-600">{item.category}</TableCell>
+                  <TableCell className="font-medium text-slate-800">{item.name}</TableCell>
+                  <TableCell className="text-right text-slate-700">{item.quantity}</TableCell>
+                  <TableCell className="text-right text-slate-700">
+                    ฿{item.price.toFixed(2)}
+                  </TableCell>
+                  <TableCell className="text-right font-medium text-slate-800">
+                    ฿{totalValue.toFixed(2)}
+                  </TableCell>
+                  <TableCell className="text-slate-500">{item.date}</TableCell>
+                  <TableCell className="text-center">
+                    <Button
+                      size="sm"
+                      className="bg-red-500 hover:bg-red-600 text-white h-7 px-2.5 text-xs gap-1"
+                      onClick={() => deleteInventoryItem(item.id)}
+                    >
+                      <Trash2 className="w-3 h-3" />
+                      Delete
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })
+          )}
+        </TableBody>
+      </Table>
+    </div>
   );
 }

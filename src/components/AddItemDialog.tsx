@@ -1,107 +1,134 @@
 import { useState } from "react";
-import { useItemStore } from "@/store/dataStore";
-import { type InventoryItem, categoryOptions } from "@/types/datatypes";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { useItemStore } from "../store/dataStore";
+import { categoryOptions, type InventoryItem } from "../types/datatypes";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
+} from "./ui/dialog";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { Plus } from "lucide-react";
 
 export function AddItemDialog() {
+  const [open, setOpen] = useState(false);
   const addInventoryItem = useItemStore((state) => state.addInventoryItem);
 
-  const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [price, setPrice] = useState("");
-  const [category, setCategory] =
-    useState<InventoryItem["category"]>("Electronics");
+  const [quantity, setQuantity] = useState<number | string>("");
+  const [price, setPrice] = useState<number | string>("");
+  const [category, setCategory] = useState<InventoryItem["category"]>("Electronics");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !quantity || !price) return;
 
-    // addInventoryItem(name, parseInt(quantity), parseFloat(price), category);
+    if (!name.trim() || quantity === "" || price === "") {
+      return;
+    }
+
+    addInventoryItem(
+      name.trim(),
+      Number(quantity),
+      Number(price),
+      category
+    );
+
     setName("");
     setQuantity("");
     setPrice("");
+    setCategory("Electronics");
     setOpen(false);
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger
-        render={<Button className="bg-indigo-500 hover:bg-indigo-600" />}
-      >
-        + Add Product
+      <DialogTrigger className="inline-flex items-center justify-center rounded-md font-medium transition-colors bg-indigo-600 hover:bg-indigo-700 text-white gap-1 text-xs h-9 px-4 py-2">
+        <Plus className="w-4 h-4" /> Add Product
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="sm:max-w-md bg-white">
         <DialogHeader>
-          <DialogTitle>New Product</DialogTitle>
+          <DialogTitle className="text-sm font-semibold">New Product</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-5 mt-4">
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="name">Product Name</Label>
+        <form onSubmit={handleSubmit} className="space-y-3 mt-2">
+          <div>
+            <Label htmlFor="name" className="text-xs text-slate-600">
+              Product Name
+            </Label>
             <Input
               id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Wireless Mouse"
               required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="mt-1 text-xs"
             />
           </div>
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="quantity">Quantity</Label>
+
+          <div>
+            <Label htmlFor="quantity" className="text-xs text-slate-600">
+              Quantity
+            </Label>
             <Input
               id="quantity"
               type="number"
-              step="1"
-              min="0"
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
+              min="1"
               placeholder="0"
               required
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              className="mt-1 text-xs"
             />
           </div>
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="price">Unit Price (฿)</Label>
+
+          <div>
+            <Label htmlFor="price" className="text-xs text-slate-600">
+              Unit Price (฿)
+            </Label>
             <Input
               id="price"
               type="number"
               step="0.01"
               min="0"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
               placeholder="0.00"
               required
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              className="mt-1 text-xs"
             />
           </div>
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="category">Category</Label>
-            <select
-              id="category"
-              className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+
+          <div>
+            <Label htmlFor="category" className="text-xs text-slate-600">
+              Category
+            </Label>
+            <Select
               value={category}
-              onChange={(e) =>
-                setCategory(e.target.value as InventoryItem["category"])
-              }
+              onValueChange={(val) => setCategory(val as InventoryItem["category"])}
             >
-              {categoryOptions.map((option) => (
-                <option key={option.id} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+              <SelectTrigger className="mt-1 text-xs">
+                <SelectValue placeholder="Select Category" />
+              </SelectTrigger>
+              <SelectContent className="bg-white">
+                {categoryOptions.map((cat) => (
+                  <SelectItem key={cat.id} value={cat.value as string} className="text-xs">
+                    {cat.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
-          <Button
-            type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600"
-          >
+
+          <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white mt-4 text-xs">
             Save Product
           </Button>
         </form>
