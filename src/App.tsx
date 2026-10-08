@@ -18,15 +18,11 @@ function App() {
           </div>
           <AddItemDialog />
         </div>
-
         <DashboardTabs />
-
         <ItemList />
       </div>
-
       <Footer />
     </div>
   );
 }
-
 export default App;

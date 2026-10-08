@@ -5,7 +5,7 @@ import {
   DrawerTitle,
 } from "./ui/drawer";
 import { Button } from "./ui/button";
-import heroImg from "../assets/hero.png";
+import profileImg from "../assets/profile.jpg";
 
 interface StudentInfoProps {
   open: boolean;
@@ -26,7 +26,7 @@ export function StudentInfo({ open, onOpenChange }: StudentInfoProps) {
         <div className="flex flex-col items-center flex-1 overflow-y-auto space-y-3">
           <div className="w-36 h-36 rounded-full overflow-hidden border-2 border-slate-200 mt-2 shadow-sm">
             <img
-              src={heroImg}
+              src={profileImg}
               alt="Student Profile"
               className="w-full h-full object-cover"
             />

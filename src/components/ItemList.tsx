@@ -13,7 +13,6 @@ import { Trash2 } from "lucide-react";
 export function ItemList() {
   const inventory = useItemStore((state) => state.inventory);
   const deleteInventoryItem = useItemStore((state) => state.deleteInventoryItem);
-
   return (
     <div className="bg-white border rounded-lg p-4 shadow-sm">
       <h3 className="text-sm font-semibold text-slate-700 mb-3">Product List</h3>
@@ -26,7 +25,6 @@ export function ItemList() {
             <TableHead className="text-right">Unit Price</TableHead>
             <TableHead className="text-right">Total Value</TableHead>
             <TableHead>Date Added</TableHead>
-            <TableHead className="text-center">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

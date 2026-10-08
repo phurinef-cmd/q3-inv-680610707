@@ -3,14 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 export function OverviewCards() {
   const inventory = useItemStore((state) => state.inventory);
-
   const totalStockValue = inventory.reduce(
     (sum, item) => sum + item.quantity * item.price,
     0
   );
   const totalProducts = inventory.length;
   const totalUnits = inventory.reduce((sum, item) => sum + item.quantity, 0);
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       <Card className="shadow-sm">
@@ -25,7 +23,6 @@ export function OverviewCards() {
           </div>
         </CardContent>
       </Card>
-
       <Card className="shadow-sm">
         <CardHeader className="pb-2">
           <CardTitle className="text-xs font-semibold text-slate-500">
@@ -38,7 +35,6 @@ export function OverviewCards() {
           </div>
         </CardContent>
       </Card>
-
       <Card className="shadow-sm">
         <CardHeader className="pb-2">
           <CardTitle className="text-xs font-semibold text-slate-500">

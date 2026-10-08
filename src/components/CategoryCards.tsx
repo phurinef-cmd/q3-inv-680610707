@@ -3,11 +3,11 @@ import { categoryOptions } from "../types/datatypes";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { 
   Laptop, 
-  PenTool, 
   ShoppingCart, 
   Shirt, 
   Wrench, 
-  MoreHorizontal 
+  MoreHorizontal, 
+  Pencil
 } from "lucide-react";
 
 export function CategoryCards() {
@@ -18,7 +18,7 @@ export function CategoryCards() {
       case "Electronics":
         return <Laptop className="w-4 h-4 text-slate-500" />;
       case "Stationery":
-        return <PenTool className="w-4 h-4 text-slate-500" />;
+        return <Pencil className="w-4 h-4 text-slate-500" />;
       case "Grocery":
         return <ShoppingCart className="w-4 h-4 text-slate-500" />;
       case "Clothing":
@@ -40,7 +40,6 @@ export function CategoryCards() {
           0
         );
         const totalUnits = items.reduce((sum, item) => sum + item.quantity, 0);
-
         return (
           <Card key={cat.id} className="shadow-sm">
             <CardHeader className="pb-1 pt-3 px-2">

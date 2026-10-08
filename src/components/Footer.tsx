@@ -3,7 +3,6 @@ import { StudentInfo } from "./StudentInfo";
 
 export function Footer() {
   const [drawerOpen, setDrawerOpen] = useState(false);
-
   return (
     <footer className="w-full border-t bg-white py-3 px-6 text-xs text-slate-500 flex items-center justify-between mt-auto">
       <div>
@@ -15,7 +14,6 @@ export function Footer() {
         </button>
       </div>
       <div>© 2026 CPE207 Corp. All rights reserved.</div>
-
       <StudentInfo open={drawerOpen} onOpenChange={setDrawerOpen} />
     </footer>
   );
