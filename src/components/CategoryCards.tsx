@@ -2,12 +2,12 @@ import { useItemStore } from "../store/dataStore";
 import { categoryOptions } from "../types/datatypes";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { 
+  Pencil,
   Laptop, 
-  ShoppingCart, 
+  Apple, 
   Shirt, 
   Wrench, 
-  MoreHorizontal, 
-  Pencil
+  MoreHorizontal
 } from "lucide-react";
 
 export function CategoryCards() {
@@ -20,7 +20,7 @@ export function CategoryCards() {
       case "Stationery":
         return <Pencil className="w-4 h-4 text-slate-500" />;
       case "Grocery":
-        return <ShoppingCart className="w-4 h-4 text-slate-500" />;
+        return <Apple className="w-4 h-4 text-slate-500" />;
       case "Clothing":
         return <Shirt className="w-4 h-4 text-slate-500" />;
       case "Tools":

@@ -1,14 +1,14 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { OverviewCards } from "./OverviewCards";
 import { CategoryCards } from "./CategoryCards";
-import { LayoutDashboard, LayoutGrid } from "lucide-react";
+import { Summary , LayoutGrid } from "lucide-react";
 
 export function DashboardTabs() {
   return (
     <Tabs defaultValue="overview" className="w-full">
       <TabsList className="mb-4 bg-slate-100 p-1">
         <TabsTrigger value="overview" className="flex items-center gap-1.5 text-xs">
-          <LayoutDashboard className="w-3.5 h-3.5" />
+          <Summary className="w-3.5 h-3.5" />
           Overview
         </TabsTrigger>
         <TabsTrigger value="category" className="flex items-center gap-1.5 text-xs">
