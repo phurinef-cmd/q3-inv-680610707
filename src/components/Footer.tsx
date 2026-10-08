@@ -12,8 +12,8 @@ export function Footer() {
         >
           Phurin Bansupa
         </button>
+          &nbsp;&nbsp;© 2026 CPE207 Corp. All rights reserved.
       </div>
-      <div>© 2026 CPE207 Corp. All rights reserved.</div>
       <StudentInfo open={drawerOpen} onOpenChange={setDrawerOpen} />
     </footer>
   );
